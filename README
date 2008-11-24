@@ -5,7 +5,7 @@ Quickstart
 1.  Edit the default.properties file to your liking.  Make sure you don't have
     whitespace after values.
 
-2.  Run 'ant init'.  This clears out the SVN and makes you a /src tree with a 
+2.  Run 'ant init'.  This deletes .git and makes you a /src tree with a 
     Main class stub.
 
 3.  You're cooking!
