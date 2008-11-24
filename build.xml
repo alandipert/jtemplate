@@ -1,0 +1,158 @@
+<project name="jtemplate" default="all" basedir=".">
+
+  <!-- default configuration -->
+  <property name="orig.vendor.namespace" 
+    value="com.ubergibson"/>
+  <property name="orig.app.name"    value="jtemplate"/>
+  <property name="orig.app.version" value="0.1"/>
+  <property name="orig.app.release" value="dev"/>
+  <property name="orig.app.compile.source" value="1.6"/>
+  <property name="orig.app.compile.target" value="1.6"/>
+
+  <!-- include user and default configuration files -->
+  <property file="build.properties"/>
+  <property file="default.properties"/>
+
+  <!-- use defaults unless already set by included configuration files -->
+  <property name="vendor.namespace" value="${orig.vendor.namespace}"/>
+  <property name="app.name"         value="${orig.app.name}"/>
+  <property name="app.version"      value="${orig.app.version}"/>
+  <property name="app.release"      value="${orig.app.release}"/>
+  <property name="app.compile.source" value="${orig.app.compile.source}"/>
+  <property name="app.compile.target" value="${orig.app.compile.target}"/>
+
+  <!-- set remaining properties -->
+  <property name="app.fullversion"  value="${app.version}-${app.release}"/>
+
+  <property name="app.base"         value="${vendor.namespace}.${app.name}"/>
+  <property name="app.fullname"     value="${app.name}-${app.fullversion}"/>
+
+  <property name="build.home"       value="${basedir}/build"/>
+  <property name="dist.home"        value="${basedir}/dist"/>
+  <property name="docs.home"        value="${basedir}/docs"/>
+  <property name="src.home"         value="${basedir}/src"/>
+  <property name="lib.home"         value="${basedir}/lib"/>
+  <property name="resources.home"   value="${basedir}/resources"/>
+  <property name="ant-contrib.home" value="${basedir}/ant/contrib"/>
+  <property name="ant-scripts.home" value="${basedir}/ant/scripts"/>
+
+  <property name="jarfile.dist"     value="${dist.home}/${app.fullname}.jar"/>
+  <property name="zipfile.dist"     value="${dist.home}/${app.fullname}.zip"/>
+  <property name="startscript.dist" value="${app.name}-start.sh"/>
+
+  <property name="compile.debug"        value="true"/>
+  <property name="compile.deprecation"  value="true"/>
+  <property name="compile.mainclass"    value="${app.base}.Main"/>
+  <property name="compile.source"    value="${app.compile.source}"/>
+  <property name="compile.target"    value="${app.compile.target}"/>
+
+  <!-- include ant-contrib tasks -->
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+    <classpath>
+      <pathelement location="${ant-contrib.home}/ant-contrib.jar"/>
+    </classpath>
+  </taskdef>
+
+  <!-- set regex properties -->
+  <propertyregex property="vendor.namespacedir"
+    input="${vendor.namespace}"
+    regexp="\."
+    replace="/"
+    global="true" />
+
+  <!-- detect java version -->
+  <available property="jdk1.3+"         classname="java.lang.StrictMath"/>
+  <available property="jdk1.4+"         classname="java.lang.CharSequence"/>
+  <available property="jdk1.5+"         classname="java.lang.Readable"/>
+
+  <!-- set classpath for compiling project -->
+  <path id="compile.classpath">
+    <pathelement path="${src.home}"/>
+    <fileset dir="${lib.home}" includes="*.jar"/>
+  </path>
+
+  <!-- the rest of this file is target definitions -->
+
+  <target name="all" depends="jar" description="Same as 'dist'."/>
+
+  <target name="init" description="Initial project configuration.">
+    <exec executable="${ant-scripts.home}/nukegit"/>
+    <mkdir dir="${src.home}/${vendor.namespacedir}/${app.name}"/>
+<echo file="${src.home}/${vendor.namespacedir}/${app.name}/Main.java"
+  append="no">package ${vendor.namespace}.${app.name};
+class Main {
+  public static void main(String[] args) {
+    System.out.println("${app.name} says hi!");
+  }
+}
+</echo>
+<echo file="${startscript.dist}" append="no">#\!/usr/bin/env bash
+java -jar ${jarfile.dist} "$@"
+</echo>
+    <chmod file="${startscript.dist}" perm="755"/>
+  </target>
+
+  <target name="clean" 
+    description="Remove compiled project, javadocs, and jar files.">
+    <delete dir="${build.home}"/>
+    <delete dir="${dist.home}"/>
+    <delete dir="${docs.home}/api"/>
+  </target>
+
+  <target name="prepare" description="Create necessary directories.">
+    <!-- Create build directories as needed -->
+    <mkdir  dir="${build.home}"/>
+    <mkdir  dir="${dist.home}"/>
+  </target>
+
+  <target name="compile" depends="prepare"
+    description="Compile Java source files.">
+    <!-- Compile Java classes as necessary -->
+    <javac  srcdir="${src.home}"
+      destdir="${build.home}"
+      debug="${compile.debug}"
+      deprecation="${compile.deprecation}"
+      source="${compile.source}"
+      target="${compile.target}"
+      classpathref="compile.classpath">
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile" 
+    description="Create jar file.">
+    <!-- Create application JAR file -->
+    <jar jarfile="${jarfile.dist}"
+      basedir="${build.home}"
+      index="true">
+      <manifest>
+        <attribute name="Built-By"               value="${user.name}"/>
+        <attribute name="Implementation-Vendor"  value="${app.vendor}"/>
+        <attribute name="Implementation-Title"   value="${app.base}"/>
+        <attribute name="Implementation-Version" value="${app.version}"/>
+        <attribute name="Main-Class"             value="${compile.mainclass}"/>
+      </manifest>
+      <fileset          dir="${build.home}"/>
+      <fileset          dir="${resources.home}"/>
+      <zipgroupfileset  dir="${lib.home}"/>
+    </jar>
+  </target>
+
+  <target name="javadoc" depends="compile" 
+    description="Create Javadoc API documentation.">
+    <mkdir dir="${docs.home}/api"/>
+    <javadoc sourcepath="${src.home}" destdir="${docs.home}/api"
+      packagenames="*">
+      <classpath refid="compile.classpath"/>
+    </javadoc>
+  </target>
+
+  <target name="dist" depends="jar,javadoc"
+    description="Create binary distribution.">
+    <zip destfile="${dist.home}/${app.fullname}.zip">
+      <zipfileset file="${jarfile.dist}"    prefix="${app.fullname}"/>
+      <zipfileset  dir="${docs.home}"       prefix="${app.fullname}/docs"
+              excludes="api/**"/>
+    </zip>
+  </target>
+
+</project>
