@@ -76,6 +76,7 @@
   <target name="all" depends="jar" description="Same as 'dist'."/>
 
   <target name="init" description="Initial project configuration.">
+    <mkdir  dir="${lib.home}"/>
     <exec executable="${ant-scripts.home}/nukegit"/>
     <mkdir dir="${src.home}/${vendor.namespacedir}/${app.name}"/>
 <echo file="${src.home}/${vendor.namespacedir}/${app.name}/Main.java"
@@ -102,7 +103,6 @@ java -jar ${jarfile.dist} "$@"
   <target name="prepare" description="Create necessary directories.">
     <!-- Create build directories as needed -->
     <mkdir  dir="${build.home}"/>
-    <mkdir  dir="${lib.home}"/>
     <mkdir  dir="${dist.home}"/>
   </target>
 
