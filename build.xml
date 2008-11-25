@@ -102,6 +102,7 @@ java -jar ${jarfile.dist} "$@"
   <target name="prepare" description="Create necessary directories.">
     <!-- Create build directories as needed -->
     <mkdir  dir="${build.home}"/>
+    <mkdir  dir="${lib.home}"/>
     <mkdir  dir="${dist.home}"/>
   </target>
 
