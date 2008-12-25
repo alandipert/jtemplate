@@ -34,7 +34,8 @@ Directories
 
 + __src:__ Java source files go here.
 
-###Files:
+Files
+-----
 
 + __default.properties__ Project-specific preferences for the build process.
 
