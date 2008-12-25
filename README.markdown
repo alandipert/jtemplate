@@ -48,4 +48,4 @@ Files
 
 + __build.properties__ User preferences for the build process.
 
-+ __&lt;<i>projectname</i>&gt;-start.sh__ Application launcher wrapper script.
++ __<i>projectname</i>-start.sh__ Application launcher wrapper script.
