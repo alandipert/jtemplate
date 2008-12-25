@@ -1,10 +1,7 @@
 Quickstart
-==========
+----------
 
-Build
------
-
-1.  Edit the default.properties file to your liking.  Make sure you don't have
+1.  Edit the _default.properties_ file to your liking.  Make sure you don't have
     whitespace after values.
 
 2.  Run 'ant init'.  This deletes .git and makes you a /src tree with a 
