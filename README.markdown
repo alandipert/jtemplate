@@ -1,6 +1,5 @@
---------------------------------------------------------------------------------
 Quickstart
---------------------------------------------------------------------------------
+==========
 
 1.  Edit the default.properties file to your liking.  Make sure you don't have
     whitespace after values.
@@ -12,8 +11,7 @@ Quickstart
 
 Ant targets you might use from here on out: 
 
-  'all' or 'dist'
-  'jar'
-  'clean'
-  'jar'
-  'javadoc'
++ 'all' or 'dist'
++ 'clean'
++ 'jar'
++ 'javadoc'
