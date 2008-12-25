@@ -3,7 +3,8 @@ JTemplate
 
 JTemplate is a simple java project skeleton. Use it to start out new java
 projects without making a big deal out of it. There are no dependencies other
-than [java][] and [ant][].
+than [java][] and [ant][], and there is no framework or IDE needed. Good for
+if you don't use Eclipse or Netbeans or whatever.
 
 [java]:       http://sun.java.com/      "Java"
 [ant]:        http://ant.apache.org/    "ant"
