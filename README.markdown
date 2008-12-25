@@ -1,3 +1,13 @@
+JTemplate
+=========
+
+JTemplate is a simple java project skeleton. Use it to start out new java
+projects without making a big deal out of it. There are no dependencies other
+than [java][] and [ant][].
+
+[java]:       http://sun.java.com/      "Java"
+[ant]:        http://ant.apache.org/    "ant"
+
 Quickstart
 ----------
 
@@ -38,4 +48,4 @@ Files
 
 + __build.properties__ User preferences for the build process.
 
-+ __&lt;projectname&gt;-start.sh__ Application launcher wrapper script.
++ __&lt;<i>projectname</i>&gt;-start.sh__ Application launcher wrapper script.
