@@ -68,7 +68,6 @@ class Main {
 </echo>
     <chmod file="${startscript.dist}" perm="755"/>
     <delete dir=".git"/>
-    <delete file=".gitignore"/>
     <delete file="README.markdown"/>
   </target>
 
