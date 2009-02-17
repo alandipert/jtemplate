@@ -3,7 +3,7 @@
   <!-- BEGIN CONFIGURATION HERE -->
   <property name="vendor.namespace"       value="com.thinkminimo"/>
   <property name="vendor.namespacedir"    value="com/thinkminimo"/>
-  <property name="app.name"               value="jtemplate"/>
+  <property name="app.name"               value="yuicompressor"/>
   <property name="app.version"            value="0.1"/>
   <property name="app.release"            value="dev"/>
   <property name="app.compile.source"     value="1.6"/>
@@ -67,7 +67,10 @@ class Main {
   java -jar dist/${app.fullname}.jar "$@"
 </echo>
     <chmod file="${startscript.dist}" perm="755"/>
-    <delete file="${basedir}/tmp.properties"/>
+  </target>
+
+  <target name="asdf">
+    <delete dir=".git"/>
   </target>
 
   <target name="clean" 
