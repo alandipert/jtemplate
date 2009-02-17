@@ -33,9 +33,8 @@
   <property name="src.home"         value="${basedir}/src"/>
   <property name="lib.home"         value="${basedir}/lib"/>
   <property name="resources.home"   value="${basedir}/resources"/>
-  <property name="antutil.home"     value="${basedir}/ant"/>
-  <property name="ant-contrib.home" value="${antutil.home}/contrib"/>
-  <property name="ant-scripts.home" value="${antutil.home}/scripts"/>
+  <property name="ant-contrib.home" value="${basedir}/ant/contrib"/>
+  <property name="ant-scripts.home" value="${basedir}/ant/scripts"/>
 
   <property name="jarfile.dist"     value="${dist.home}/${app.fullname}.jar"/>
   <property name="zipfile.dist"     value="${dist.home}/${app.fullname}.zip"/>
@@ -46,20 +45,6 @@
   <property name="compile.mainclass"    value="${app.base}.Main"/>
   <property name="compile.source"    value="${app.compile.source}"/>
   <property name="compile.target"    value="${app.compile.target}"/>
-
-  <!-- include ant-contrib tasks -->
-  <taskdef resource="net/sf/antcontrib/antcontrib.properties">
-    <classpath>
-      <pathelement location="${ant-contrib.home}/ant-contrib.jar"/>
-    </classpath>
-  </taskdef>
-
-  <!-- set regex properties -->
-  <propertyregex property="vendor.namespacedir"
-    input="${vendor.namespace}"
-    regexp="\."
-    replace="/"
-    global="true" />
 
   <!-- detect java version -->
   <available property="jdk1.3+"         classname="java.lang.StrictMath"/>
@@ -77,8 +62,17 @@
   <target name="all" depends="jar" description="Same as 'dist'."/>
 
   <target name="init" description="Initial project configuration.">
+<echo file="${basedir}/tmp.properties" append="no">
+${vendor.namespace}
+</echo>
+    <replaceregexp match="\." replace="/" flags="g">
+      <fileset file="${basedir}/tmp.properties"/>
+    </replaceregexp>
+    <replaceregexp match="^(.*)$" replace="vendor.namespacedir=\1">
+      <fileset file="${basedir}/tmp.properties"/>
+    </replaceregexp>
+    <property file="${basedir}/tmp.properties"/>
     <mkdir  dir="${lib.home}"/>
-    <exec executable="${ant-scripts.home}/nukegit"/>
     <mkdir dir="${src.home}/${vendor.namespacedir}/${app.name}"/>
 <echo file="${src.home}/${vendor.namespacedir}/${app.name}/Main.java"
   append="no">package ${vendor.namespace}.${app.name};
@@ -89,10 +83,10 @@ class Main {
 }
 </echo>
 <echo file="${startscript.dist}" append="no">#\!/usr/bin/env bash
-java -jar dist/${app.fullname}.jar "$@"
+  java -jar dist/${app.fullname}.jar "$@"
 </echo>
     <chmod file="${startscript.dist}" perm="755"/>
-    <delete dir="${antutil.home}"/>
+    <delete file="${basedir}/tmp.properties"/>
   </target>
 
   <target name="clean" 
