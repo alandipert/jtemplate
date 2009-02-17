@@ -65,6 +65,7 @@
 <echo file="${basedir}/tmp.properties" append="no">
 ${vendor.namespace}
 </echo>
+    <echo message="app vendor = [${app.vendor}]"/>
     <replaceregexp match="\." replace="/" flags="g">
       <fileset file="${basedir}/tmp.properties"/>
     </replaceregexp>
