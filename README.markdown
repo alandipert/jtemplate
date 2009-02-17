@@ -12,15 +12,18 @@ if you don't use Eclipse or Netbeans or whatever.
 Quickstart
 ----------
 
-1.  Edit the _default.properties_ file to your liking.  Make sure you don't have
-    whitespace after values.
+1.  Edit the _build.xml_ file to your liking.  The first few properties
+    are clearly marked, and are expected to be set for your specific
+    project.
 
-2.  Run 'ant init'.  This deletes .git and makes you a /src tree with a 
-    Main class stub.
+2.  Run 'ant init'.  This deletes .git and makes you a _/src_ tree with
+    a Main class stub and the _resources/_, _lib/_, and _doc/_ directories
+    for your resource files, external jarfile dependencies, and project
+    documentation.
 
 3.  You're cooking!
 
-Ant targets you might use from here on out: 
+Ant targets you might use from here on out (remember ant -projecthelp): 
 
 + 'all' or 'dist'
 + 'clean'
@@ -30,7 +33,7 @@ Ant targets you might use from here on out:
 Directories
 -----------
     
-+ __docs:__ Project documentation. API javadocs will be written to docs/api/ 
++ __docs:__ Project documentation. API javadocs will be written to _docs/api/_ 
   directory. You can include anything you want here (documentation for 
   dependencies, etc).  
 
@@ -44,9 +47,5 @@ Directories
 
 Files
 -----
-
-+ __default.properties__ Project-specific preferences for the build process.
-
-+ __build.properties__ User preferences for the build process.
 
 + __<i>projectname</i>-start.sh__ Application launcher wrapper script.

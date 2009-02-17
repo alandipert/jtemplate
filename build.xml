@@ -1,25 +1,14 @@
 <project name="jtemplate" default="all" basedir=".">
 
-  <!-- default configuration -->
-  <property name="orig.vendor.namespace" 
-    value="com.ubergibson"/>
-  <property name="orig.app.name"    value="jtemplate"/>
-  <property name="orig.app.version" value="0.1"/>
-  <property name="orig.app.release" value="dev"/>
-  <property name="orig.app.compile.source" value="1.6"/>
-  <property name="orig.app.compile.target" value="1.6"/>
-
-  <!-- include user and default configuration files -->
-  <property file="build.properties"/>
-  <property file="default.properties"/>
-
-  <!-- use defaults unless already set by included configuration files -->
-  <property name="vendor.namespace" value="${orig.vendor.namespace}"/>
-  <property name="app.name"         value="${orig.app.name}"/>
-  <property name="app.version"      value="${orig.app.version}"/>
-  <property name="app.release"      value="${orig.app.release}"/>
-  <property name="app.compile.source" value="${orig.app.compile.source}"/>
-  <property name="app.compile.target" value="${orig.app.compile.target}"/>
+  <!-- BEGIN CONFIGURATION HERE -->
+  <property name="vendor.namespace"       value="com.thinkminimo"/>
+  <property name="vendor.namespacedir"    value="com/thinkminimo"/>
+  <property name="app.name"               value="jtemplate"/>
+  <property name="app.version"            value="0.1"/>
+  <property name="app.release"            value="dev"/>
+  <property name="app.compile.source"     value="1.6"/>
+  <property name="app.compile.target"     value="1.6"/>
+  <!-- END CONFIGURATION HERE   -->
 
   <!-- set remaining properties -->
   <property name="app.fullversion"  value="${app.version}-${app.release}"/>
@@ -62,18 +51,9 @@
   <target name="all" depends="jar" description="Same as 'dist'."/>
 
   <target name="init" description="Initial project configuration.">
-<echo file="${basedir}/tmp.properties" append="no">
-${vendor.namespace}
-</echo>
-    <echo message="app vendor = [${app.vendor}]"/>
-    <replaceregexp match="\." replace="/" flags="g">
-      <fileset file="${basedir}/tmp.properties"/>
-    </replaceregexp>
-    <replaceregexp match="^(.*)$" replace="vendor.namespacedir=\1">
-      <fileset file="${basedir}/tmp.properties"/>
-    </replaceregexp>
-    <property file="${basedir}/tmp.properties"/>
-    <mkdir  dir="${lib.home}"/>
+    <mkdir dir="${lib.home}"/>
+    <mkdir dir="${resources.home}"/>
+    <mkdir dir="${docs.home}"/>
     <mkdir dir="${src.home}/${vendor.namespacedir}/${app.name}"/>
 <echo file="${src.home}/${vendor.namespacedir}/${app.name}/Main.java"
   append="no">package ${vendor.namespace}.${app.name};
