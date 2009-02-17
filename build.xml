@@ -46,11 +46,17 @@
     <fileset dir="${lib.home}" includes="*.jar"/>
   </path>
 
+  <!-- if we already did init we don't want to accidentally do it again -->
+  <condition property="alread_did_init">
+    <available file=".init"/>
+  </condition>
+
   <!-- the rest of this file is target definitions -->
 
   <target name="all" depends="jar" description="Same as 'dist'."/>
 
-  <target name="init" description="Initial project configuration.">
+  <target name="init" description="Initial project configuration."
+    unless="alread_did_init">
     <mkdir dir="${lib.home}"/>
     <mkdir dir="${resources.home}"/>
     <mkdir dir="${docs.home}"/>
@@ -69,6 +75,7 @@ class Main {
     <chmod file="${startscript.dist}" perm="755"/>
     <delete dir=".git"/>
     <delete file="README.markdown"/>
+    <touch file=".init"/>
   </target>
 
   <target name="clean" 
