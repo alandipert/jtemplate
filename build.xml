@@ -33,8 +33,9 @@
   <property name="src.home"         value="${basedir}/src"/>
   <property name="lib.home"         value="${basedir}/lib"/>
   <property name="resources.home"   value="${basedir}/resources"/>
-  <property name="ant-contrib.home" value="${basedir}/ant/contrib"/>
-  <property name="ant-scripts.home" value="${basedir}/ant/scripts"/>
+  <property name="antutil.home"     value="${basedir}/ant"/>
+  <property name="ant-contrib.home" value="${antutil.home}/contrib"/>
+  <property name="ant-scripts.home" value="${antutil.home}/scripts"/>
 
   <property name="jarfile.dist"     value="${dist.home}/${app.fullname}.jar"/>
   <property name="zipfile.dist"     value="${dist.home}/${app.fullname}.zip"/>
@@ -88,9 +89,10 @@ class Main {
 }
 </echo>
 <echo file="${startscript.dist}" append="no">#\!/usr/bin/env bash
-java -jar ${jarfile.dist} "$@"
+java -jar dist/${app.fullname}.jar "$@"
 </echo>
     <chmod file="${startscript.dist}" perm="755"/>
+    <delete dir="${antutil.home}"/>
   </target>
 
   <target name="clean" 
