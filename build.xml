@@ -67,10 +67,9 @@ class Main {
   java -jar dist/${app.fullname}.jar "$@"
 </echo>
     <chmod file="${startscript.dist}" perm="755"/>
-  </target>
-
-  <target name="asdf">
     <delete dir=".git"/>
+    <delete file=".gitgnore"/>
+    <delete file="README.markdown"/>
   </target>
 
   <target name="clean" 
