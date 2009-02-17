@@ -63,7 +63,8 @@
     <mkdir dir="${src.home}/${vendor.namespacedir}/${app.name}"/>
 <echo file="${src.home}/${vendor.namespacedir}/${app.name}/Main.java"
   append="no">package ${vendor.namespace}.${app.name};
-class Main {
+
+public class Main {
   public static void main(String[] args) {
     System.out.println("${app.name} says hi!");
   }
